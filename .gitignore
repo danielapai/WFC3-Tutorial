@@ -1,0 +1,6 @@
+*.key
+*.sav
+*~
+\#*\#
+*.DS_Store
+*.pyc
