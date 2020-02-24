@@ -100,10 +100,11 @@ def HSTtransitLC(expTime, cRate,
     count = cRate * expTime * m.light_curve(params)
     t_mod = np.linspace(t.min(), t.max(), 10*len(t))
     m = batman.TransitModel(params, t_mod / (24*3600))
+    count_mod = cRate * expTime * m.light_curve(params)
     if plot:
         fig, ax = plt.subplots()
         ax.plot(t / 60, count, 'o')
         ax.set_xlabel('Time [min]')
         ax.set_ylabel(r'count [$\mathsf{e^-}$]')
         plt.show()
-    return count, t
+    return count, t, count_mod, t_mod

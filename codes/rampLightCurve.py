@@ -151,7 +151,8 @@ def rampModel(
     param_transit['t0'] = 220
     param_transit['a'] = 15
     params = param_transit
-    counts, tExp = HSTtransitLC(exptime, cRate, params, orbits=4, plot=False)
+    counts, tExp, counts_mod, t_mod = HSTtransitLC(
+        exptime, cRate, params, orbits=4, plot=False)
     obsCount = RECTE(nTrap_s,
                      eta_s,
                      tau_s,
@@ -167,7 +168,7 @@ def rampModel(
                      dTrap_f=0,
                      dt0=0,
                      lost=0)
-    return obsCount, tExp
+    return obsCount, tExp, counts_mod, t_mod
 
 
 def rampCorrection(
@@ -207,7 +208,7 @@ def rampCorrection(
     param_transit['t0'] = 220
     param_transit['a'] = 15
     params = param_transit
-    counts, tExp = HSTtransitLC(exptime, cRate, params, orbits=4, plot=False)
+    counts, tExp, counts_mod, t_mod = HSTtransitLC(exptime, cRate, params, orbits=4, plot=False)
     nTrap_s = 1525.38  # 1320.0
     eta_s = 0.013318  # 0.01311
     tau_s = 1.63e4
@@ -241,11 +242,11 @@ if __name__ == '__main__':
     tau_f = 100
     cRate = 200
     exptime = 100
-    lc, t = rampModel(nTrap_s,
-                      eta_s,
-                      tau_s,
-                      nTrap_f,
-                      eta_f,
-                      tau_f,
-                      cRate,
-                      exptime)
+    lc, t, lc0, t0 = rampModel(nTrap_s,
+                               eta_s,
+                               tau_s,
+                               nTrap_f,
+                               eta_f,
+                               tau_f,
+                               cRate,
+                               exptime)

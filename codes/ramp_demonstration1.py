@@ -10,8 +10,8 @@ def rampModelPlot(
     nTrap_f,
     eta_f,
     tau_f,
-    crate=200,  # electron per second
-    exptime=100):
+    crate=350,  # electron per second
+    exptime=120):
     """plot the ramp model profiles with various model parameters
 
     nTrap: number of traps for slow (_s) and fast (_fast) traps
@@ -21,7 +21,7 @@ def rampModelPlot(
     # rampModel function is made to conveniently change the charge trapping
     # related parameters
     # This function is not for correction purposes
-    lc, t = rampModel(
+    lc, t, lc0, t0 = rampModel(
         nTrap_s,
         eta_s,
         tau_s,
@@ -33,8 +33,10 @@ def rampModelPlot(
     )
     fig = plt.gcf()
     plt.cla()
-    plt.plot(t, lc, 'o')
+    plt.plot(t, lc, 'o', mfc='none', label='Simulated observation')
+    plt.plot(t0, lc0, lw=2, alpha=0.8, label='The true lightcurve')
     plt.xlabel('Time [s]')
     plt.ylabel('Flux count [e]')
     plt.ylim(crate*exptime * 0.98, crate*exptime*1.003)
+    plt.legend(loc='lower right')
     plt.draw()
