@@ -1,18 +1,21 @@
-import shelve
+import pickle
 import numpy as np
 import matplotlib.pyplot as plt
 
-DBFileName = 'codes/binned_lightcurves_visit_01.shelve'
-saveDB = shelve.open(DBFileName)
+
+DBFileName = 'codes/binned_lightcurves_visit_01.pkl'
+with open(DBFileName, 'rb') as pkl:
+    saveDB = pickle.load(pkl)
 
 LCarray = saveDB['LCmat']
-ERRarray = saveDB['ERRmat']
-time = saveDB['time']
-wavelength = saveDB['wavelength']
+ERRarray = saveDB['Errmat']
+time = saveDB['time'].values[1:]
+time = time - time[0]
+# wavelength = saveDB['wavelength']
 orbit = saveDB['orbit']
 orbit_transit = np.array([2])  # transit occurs in the third orbits
 expTime = saveDB['expTime']
-saveDB.close()
+wavelength = np.linspace(1.1, 1.65, 12)
 
 # plot light curve of the second channel and the sixth channel
 fig1 = plt.figure(figsize=(10, 6))
